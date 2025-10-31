@@ -1,57 +1,254 @@
-# Seleção Desenvolvedor .Net
+# Plataforma de Cursos Online
 
-Olá, tudo tranquilo? Se você chegou até aqui, significa que tem interesse em uma das nossas vagas, certo? 
-Basicamente, o seu código será analisado por um dos nossos arquitetos e se você se sair bem, é bem provável que 
-faça parte do nosso time. Desejamos que você seja muito bem sucedido na atividade quem vem a seguir.
+Plataforma de cursos online desenvolvida com Clean Architecture, princípios SOLID, ASP.NET Core Web API e Angular 17.
 
-## Do que se trata a atividade?
+## 🏗️ Arquitetura
 
-Precisamos que você nos mostre que sabe trabalhar com a stack .Net e Angular. 
-Basicamente a ideia consiste na criação uma API escrita com Asp.Net Core Web API, além de uma camada Web escrita com 
-Angular na versão mais recente, utilizando a técnica de monorepo, ou seja, o frontend e o backend estarão no mesmo repositório.
+O projeto segue os princípios de **Clean Architecture** com separação clara de responsabilidades:
 
-Caso você não saiba Angular, encorajamos que você nos envie a API.
+```
+src/
+├── Backend/ (ASP.NET Core Web API)
+│   ├── PlataformaCursos.API/          # Camada de apresentação (Controllers, Swagger)
+│   ├── PlataformaCursos.Application/  # Casos de uso (Commands, Queries, Handlers)
+│   ├── PlataformaCursos.Domain/       # Entidades e regras de negócio
+│   ├── PlataformaCursos.Infrastructure/ # Implementações (Repositórios, Serviços)
+│   └── PlataformaCursos.Tests/       # Testes unitários e de integração
+└── Frontend/ (Angular 17)
+    └── src/
+        └── app/
+            ├── core/                   # Serviços e modelos compartilhados
+            ├── features/               # Módulos de funcionalidades
+            └── shared/                 # Componentes compartilhados
+```
 
-### O que será avaliado?
+## 🎯 Principais Funcionalidades
 
-* Uso da stack .Net e Angular
-* Uso de padrão arquitetural
-* Padrões de projeto e SOLID
-* Coesão
-* Baixo acoplamento
-* Polimorfismo
-* Documentação interativa da API
-* Evitar código extremamente verboso
-* Aplicação de testes de unidade
-* Aplicação de testes de integração
+- ✅ Cadastro de Estudantes
+- ✅ Gerenciamento de Cartões de Crédito
+- ✅ Listagem de Cursos Disponíveis
+- ✅ Realização de Matrículas (com validação de pagamentos)
+- ✅ Histórico de Pagamentos
+- ✅ Envio de Email de Confirmação (mockado)
 
+## 🛠️ Tecnologias Utilizadas
 
-### Requisitos que devem ser implementados
+### Backend
+- **.NET 8.0**
+- **ASP.NET Core Web API**
+- **MediatR** (CQRS)
+- **FluentValidation** (Validações)
+- **AutoMapper** (Mapeamento de DTOs)
+- **Swagger/OpenAPI** (Documentação)
+- **Serilog** (Logging estruturado)
+- **xUnit** (Testes)
+- **Moq** (Mocking)
+- **FluentAssertions** (Assertions)
 
-Vamos pensar em um cenário de uma Plataforma de Cursos on demand onde:
+### Frontend
+- **Angular 17**
+- **TypeScript**
+- **RxJS**
+- **Standalone Components**
 
-1. O estudante poderá realizar o seu cadastro na plataforma.
-2. O estudante poderá cadastrar um cartão de crédito vinculado a sua conta.
-3. A plataforma deve oferecer uma lista de cursos onde o estudante poderá se matricular, porém, a matrícula só é possível 
-se o estudante tiver realizado pelo menos um pagamento.
-4. A plataforma deve enviar um email se a operação de matrícula for realizada com sucesso.
+## 📋 Pré-requisitos
 
-* OBS 1: Você deve deduzir quais são as entidades do domínio necessárias para completar a atividade, tal como os relacionamentos, etc
-* OBS 2: **Não será avaliado** o uso do serviço de envio de email externo como por exemplo Sendgrid. Está etapa pode ser mockada.
-* OBS 3: **Não será avaliado** o uso de banco de dados, então, você poderar escolher armazenar em memória ou usar qualquer 
-outra forma de armazenamento. Está etapa pode ser mockada.
+- .NET 8.0 SDK
+- Node.js 18+ e npm
+- Angular CLI 17+
 
-### Seria interessante
+## 🚀 Como Executar
 
-* Documentação interativa da API com Swagger   
-ou 
-* Crie as chamadas para a API em uma Collection do Postman e exporte para que possamos realizar as chamadas através dela.
+### Backend
 
+1. Navegue até a pasta do backend:
+```bash
+cd src/Backend
+```
 
-### Uma vez feito, como entrego o projeto?
+2. Restaure as dependências:
+```bash
+dotnet restore
+```
 
-1. Crie um fork deste projeto;
-2. Desenvolva;
-3. Envie e-mail com o link do seu repositório e sinalizando a entrega para o analista técnico que está te apoiando durante o desenvolvimento.
+3. Execute o projeto:
+```bash
+cd PlataformaCursos.API
+dotnet run
+```
 
-OBS: Você possui 4 dias para entregar a atividade. Em caso de dúvidas enviar e-mail para o analista que está te apoiando durante o desenvolvimento
+A API estará disponível em:
+- **API**: `http://localhost:5000` ou `https://localhost:5001`
+- **Swagger**: `http://localhost:5000` (configurado como rota raiz)
+
+### Frontend
+
+1. Navegue até a pasta do frontend:
+```bash
+cd src/Frontend
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+3. Execute o projeto:
+```bash
+npm start
+```
+
+O frontend estará disponível em `http://localhost:4200`
+
+## 🧪 Executando os Testes
+
+### Backend
+
+```bash
+cd src/Backend
+dotnet test
+```
+
+## 📡 Endpoints da API
+
+### Estudantes
+
+- `POST /api/estudantes/cadastro` - Cadastra um novo estudante
+- `POST /api/estudantes/{id}/cartoes` - Adiciona cartão de crédito ao estudante
+
+### Cursos
+
+- `GET /api/cursos` - Lista todos os cursos disponíveis (com cache)
+
+### Matrículas
+
+- `POST /api/matriculas` - Realiza matrícula de estudante em curso
+
+### Pagamentos
+
+- `GET /api/pagamentos/estudante/{estudanteId}` - Lista pagamentos do estudante
+
+### Health Check
+
+- `GET /health` - Status da aplicação
+
+## 🏛️ Princípios SOLID Implementados
+
+### Single Responsibility Principle (SRP)
+- Cada classe tem uma única responsabilidade
+- Handlers processam apenas um comando/query
+- Serviços têm responsabilidades bem definidas
+
+### Open/Closed Principle (OCP)
+- Uso de interfaces permite extensão sem modificação
+- `IMetodoPagamento` permite adicionar novos métodos de pagamento
+
+### Liskov Substitution Principle (LSP)
+- Repositórios implementam interfaces que podem ser substituídas
+- Serviços podem ser mockados facilmente
+
+### Interface Segregation Principle (ISP)
+- Interfaces específicas (`IEmailService`, `IMetodoPagamento`)
+- Clientes não dependem de interfaces que não usam
+
+### Dependency Inversion Principle (DIP)
+- Dependências através de interfaces
+- Injeção de dependência em todos os serviços
+
+## 🎨 Padrões de Projeto
+
+### Repository Pattern
+- Abstração de acesso a dados
+- Implementação em memória para desenvolvimento
+
+### CQRS (Command Query Responsibility Segregation)
+- Separação de leitura e escrita
+- Commands para modificações
+- Queries para consultas
+
+### Mediator Pattern
+- MediatR para desacoplamento
+- Comunicação via commands/queries
+
+### Domain Events
+- Eventos de domínio para ações importantes
+- Matrícula gera evento que dispara email
+
+## 📦 Estrutura do Backend
+
+### Domain Layer
+- **Entities**: Estudante, Curso, Matricula, Pagamento, CartaoCredito
+- **Value Objects**: Email
+- **Domain Events**: MatriculaRealizadaEvent
+- **Interfaces**: IRepository, IUnitOfWork
+
+### Application Layer
+- **Commands**: CadastrarEstudante, AdicionarCartaoCredito, RealizarMatricula
+- **Queries**: ObterTodosCursos, ObterPagamentosEstudante
+- **Handlers**: Implementações dos commands/queries
+- **Validators**: FluentValidation para validação
+- **DTOs**: Objetos de transferência de dados
+
+### Infrastructure Layer
+- **Repositories**: Implementações em memória
+- **Services**: MockEmailService, CartaoCreditoService
+- **UnitOfWork**: Gerenciamento de transações
+
+### API Layer
+- **Controllers**: Endpoints RESTful
+- **Configuration**: Swagger, CORS, DI, Logging
+
+## 🎯 Diferenciais Implementados
+
+- ✅ **Value Objects**: Email como value object
+- ✅ **Domain Events**: MatriculaRealizadaEvent
+- ✅ **Cache Estratégico**: Cache de listagem de cursos
+- ✅ **Tratamento de Erros Global**: Middleware de exceções
+- ✅ **Logging Estruturado**: Serilog
+- ✅ **Health Checks**: Endpoint de status
+- ✅ **Swagger com Exemplos**: Documentação interativa
+
+## 📝 Validações de Negócio
+
+### Matrícula
+- Estudante deve existir
+- Curso deve existir e estar ativo
+- Estudante deve ter pelo menos um pagamento aprovado
+- Estudante não pode ter matrícula ativa duplicada
+
+### Cartão de Crédito
+- Número deve ter 13-19 dígitos
+- CVV deve ter 3-4 dígitos
+- Validade não pode ser no passado
+
+### Estudante
+- Email deve ser válido e único
+- Nome deve ter no mínimo 3 caracteres
+
+## 🔒 Segurança
+
+- Validações no backend (FluentValidation)
+- Validações no frontend (reactive forms)
+- CORS configurado para Angular
+- Tratamento de erros padronizado
+
+## 📚 Documentação Adicional
+
+A documentação interativa da API está disponível no Swagger quando a aplicação está em execução.
+
+## 🤝 Contribuindo
+
+Este é um projeto de demonstração desenvolvido para processo seletivo, demonstrando:
+- Arquitetura limpa e bem estruturada
+- Aplicação dos princípios SOLID
+- Testes unitários e de integração
+- Código limpo e manutenível
+- Boas práticas de desenvolvimento
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins de demonstração técnica.
+
+---
+
+**Desenvolvido com ❤️ seguindo Clean Architecture e SOLID Principles**
